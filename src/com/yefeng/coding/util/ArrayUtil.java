@@ -29,12 +29,13 @@ public class ArrayUtil {
         for (int i = 0; i < arr.length-1; i++) {
             System.out.print(arr[i]+" ");
         }
+
         System.out.println(arr[arr.length-1]);
     }
     public static void checkArrayIndexOut(int[] arr){
         if (arr.length==0)
             throw new IndexOutOfBoundsException("数组长度为0");
-
+        System.out.println("sadf");
     }
     public static void reverseArray(int[] s) {
         // 一左一右两个指针相向而行
