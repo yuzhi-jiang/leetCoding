@@ -14,7 +14,7 @@ import java.util.List;
  * @createTime 2022年06月25日 22:54:00
  */
 public class nSum {
-    public static List<List<Integer>> twoSumTarget(
+    private List<List<Integer>> twoSumTarget(
             int[] nums, int start, int target) {
         // 左指针改为从 start 开始，其他不变
         ArrayList<List<Integer>> res = new ArrayList<>();
@@ -40,6 +40,7 @@ public class nSum {
 
             }
         }
+
         return res;
 //        int lo = start;
 //        int hi = nums.length - 1;
@@ -51,20 +52,25 @@ public class nSum {
     }
 
 
-    public static List<List<Integer>> nSum(int[] arr, int n, int start, int target) {
+    public List<List<Integer>> solveNSum(int[] arr, int n, int start, int target) {
+        Arrays.sort(arr);
+        return nSumToTarget(arr, n, start, target);
+    }
+
+    private List<List<Integer>> nSumToTarget(int[] arr, int n, int start, int target) {
 
         ArrayList<List<Integer>> res = new ArrayList<>();
         int len = arr.length;
         if (n < 2 || len < n) return res;
         double min, max, count;
-        if(n==2){
+        if (n == 2) {
             return twoSumTarget(arr, start, target);
         }
 
 //       todo 遍历第一个数
         for (int i = start; i <= len-n; i++) {
 
-            // todo find the min or max if max<target or min>target then continue
+            // todo find the min or max if max < target 或者 min > target then continue
             min = max = 0;
             count = 0;
             for (int t = i; t < len && count < n; ++t, ++count) {
@@ -84,7 +90,7 @@ public class nSum {
 
 
             //todo
-            List<List<Integer>> sub = nSum(arr, n - 1, i + 1, target - arr[i]);
+            List<List<Integer>> sub = nSumToTarget(arr, n - 1, i + 1, target - arr[i]);
 
 
 //            for (int it = 0; it < sub.size(); it++) {
@@ -105,27 +111,10 @@ public class nSum {
     }
 
     public static void main(String[] args) {
-        int[] arr = ArrayUtil.createByArg(0,0,0,1000000000,1000000000,1000000000,1000000000);
+        int[] arr = ArrayUtil.createByArg(-1, 1, 0, 1000000000, 1000000000, 1000000000, 1000000000, 0);
+        nSum nSum = new nSum();
+        List<List<Integer>> lists = nSum.solveNSum(arr, 4, 0, 0);
+        lists.forEach(System.out::println);
 
-//        List<List<Integer>> lists1 = twoSumTarget(arr, 0, 3);
-//        for (List<Integer> list : lists1) {
-//            list.forEach(key-> System.out.print(key+" "));
-//            System.out.println();
-//            list.add(9);
-//
-//        }
-//
-//        System.out.println("--------------");
-
-
-        Arrays.sort(arr);
-
-        System.out.println("\n----------");
-        List<List<Integer>> lists = nSum(arr, 4, 0, 1000000000);
-        System.out.println("结果");
-        for (List<Integer> list : lists) {
-            list.forEach(key-> System.out.print(key+" "));
-            System.out.println();
-        }
     }
 }
