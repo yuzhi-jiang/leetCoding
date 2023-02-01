@@ -89,6 +89,8 @@ public class 恢复二叉树 {
                 second = root;
             }
             prev = root;
+
+
             System.out.println("prev"+prev.val);
             inorderTraverse(root.right);
         }

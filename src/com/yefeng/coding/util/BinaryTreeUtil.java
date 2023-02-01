@@ -20,19 +20,19 @@ public class BinaryTreeUtil {
         if (i > arr.length) {// i >= arr.length 时,表示已经到达了根节点
             return null;
         }
-        if(arr[i-1] == null){
+        if (arr[i - 1] == null) {
             return null;
         }
-        TreeNode root = new TreeNode(arr[i-1]); // 根节点
-        root.left = createBT(arr, 2*i); // 递归建立左孩子结点
-        root.right = createBT(arr, 2*i+1); // 递归建立右孩子结点
+        TreeNode root = new TreeNode(arr[i - 1]); // 根节点
+        root.left = createBT(arr, 2 * i); // 递归建立左孩子结点
+        root.right = createBT(arr, 2 * i + 1); // 递归建立右孩子结点
 
         return root;
     }
 
 
-    public static TreeNode createBT(Integer[] arr){
-        if(arr.length == 0){
+    public static TreeNode createBT(Integer[] arr) {
+        if (arr.length == 0) {
             return null;
         }
         TreeNode root = new TreeNode(arr[0]);
@@ -40,17 +40,17 @@ public class BinaryTreeUtil {
         queue.add(root);
 
         boolean isLeft = true;//是左子树
-        for(int i = 1; i< arr.length; i++){
+        for (int i = 1; i < arr.length; i++) {
             TreeNode node = queue.peek(); //peek()获取第一个元素，不移除
             assert node != null;
-            if(isLeft){
-                if(arr[i] != null){
+            if (isLeft) {
+                if (arr[i] != null) {
                     node.left = new TreeNode(arr[i]);
                     queue.offer(node.left); //offer(E e) 在队列尾部添加一个元素，并返回是否成功
                 }
                 isLeft = false;
             } else {
-                if(arr[i] != null){
+                if (arr[i] != null) {
                     node.right = new TreeNode(arr[i]);
                     queue.offer(node.right);
                 }
@@ -63,28 +63,28 @@ public class BinaryTreeUtil {
     }
 
     //   遍历
-   public static void traverse(TreeNode root,int index) {
+    public static void traverse(TreeNode root, int index) {
 
-       if (root == null) {
-       //    System.out.print("null ");
+        if (root == null) {
+            //    System.out.print("null ");
             return;
         }
-       if (index==1){
-           System.out.print(root.val+" ");
-       }
+        if (index == 1) {
+            System.out.print(root.val + " ");
+        }
         // 前序位置
-        traverse(root.left,index);
+        traverse(root.left, index);
         // 中序位置
-       if (index==0){
-           System.out.print(root.val+" ");
-       }
+        if (index == 0) {
+            System.out.print(root.val + " ");
+        }
 
 
-        traverse(root.right,index);
+        traverse(root.right, index);
         // 后序位置
-       if (index==-1){
-           System.out.print(root.val+" ");
-       }
+        if (index == -1) {
+            System.out.print(root.val + " ");
+        }
     }
 
 
@@ -99,7 +99,7 @@ public class BinaryTreeUtil {
             for (int i = 0; i < size; i++) {
                 TreeNode curr = queue.poll();
                 assert curr != null;
-                System.out.print(curr.val+" ");
+                System.out.print(curr.val + " ");
                 //加入左右子树
                 if (curr.left != null) queue.offer(curr.left);//需在队尾加入，因为前面的还没pop完
                 if (curr.right != null) queue.offer(curr.right);
@@ -107,5 +107,16 @@ public class BinaryTreeUtil {
         }
         System.out.println();
 
+    }
+
+    public static TreeNode createBTByArgs(Integer... args) {
+        if (args.length == 0) {
+            return null;
+        }
+        Integer[] arrs = new Integer[args.length];
+        for (int i = 0; i < args.length; i++) {
+            arrs[i] = args[i];
+        }
+        return createBT(arrs);
     }
 }
