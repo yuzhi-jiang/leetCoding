@@ -41,11 +41,13 @@
 
 <div id="labuladong"><hr>
 
-**通知：[数据结构精品课](https://aep.h5.xeknow.com/s/1XJHEO) 已更新到 V2.0，第 12
-期刷题打卡 [开始报名](https://aep.xet.tech/s/XhcRc)
-，点击这里体验 [刷题全家桶](https://labuladong.gitee.io/algo/images/others/%E5%85%A8%E5%AE%B6%E6%A1%B6.jpg)。**
+**通知：[数据结构精品课](https://aep.h5.xeknow.com/s/1XJHEO) 已更新到
+V2.1，[手把手刷二叉树系列课程](https://aep.xet.tech/s/3YGcq3) 上线，第 16
+期刷题打卡 [最后一天报名](https://aep.xet.tech/s/46nofd)。**
 
 </div>
+
+
 
 
 

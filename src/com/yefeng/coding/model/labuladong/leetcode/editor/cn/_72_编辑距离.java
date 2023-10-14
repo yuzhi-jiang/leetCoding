@@ -22,10 +22,12 @@ public class _72_编辑距离 {
             int len2 = word2.length();
             int[][] dp = new int[len1 + 1][len2 + 1]; //dp[i][j] word1（0..i）到word2(0..j)要的最少操作数
 //        base case
-            for (int i = 1; i <= len1; ++i)
+            for (int i = 1; i <= len1; ++i) {
                 dp[i][0] = i;
-            for (int j = 1; j <= len2; ++j)
+            }
+            for (int j = 1; j <= len2; ++j) {
                 dp[0][j] = j;
+            }
 
             for (int i = 1; i <= len1; ++i) {
                 for (int j = 1; j <= len2; ++j) {

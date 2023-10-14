@@ -13,7 +13,7 @@ public class Ti_4_MedianOfTwoSortedArrays {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-            return solve1(nums1, nums2);
+            return solve2(nums1, nums2);
         }
 
         public double solve1(int[] nums1, int[] nums2) {
@@ -39,14 +39,53 @@ public class Ti_4_MedianOfTwoSortedArrays {
 
 
         public double solve2(int[] nums1, int[] nums2) {
-            return -1;
+            int len1 = nums1.length;
+            int len2 = nums2.length;
+
+            int minIndex = (len1 + len2) >> 1;
+
+            int as, bs;
+            as = 0;
+            bs = 0;
+
+            int l, r;
+
+            l = r = 0;
+
+            //只将r需要遍历到中位数即可
+            for (int i = 0; i <= minIndex; ++i) {
+                l = r;
+
+                //nums1比较小
+                if (as < len1 && (bs >= len2 || nums1[as] < nums2[bs])) {
+                    r = nums1[as++];
+                }
+                //nums2比较小
+                else if (bs < len2 && (as >= len1 || nums2[bs] <= nums1[as])) {
+                    r = nums2[bs++];
+                }
+            }
+
+            //如果是偶数
+            if (((len1 + len2) & 1) == 0) {
+                return l + (r - l) / 2.0;
+            }
+            return r * 1.0;
 
         }
 
 
-        //获取第k小的数
+        /**
+         * 从两个数组中获取第k小的数字
+         *
+         * @param nums1 数组一
+         * @param nums2 数组二
+         * @param k     第k小
+         * @return 第k小的数
+         */
         public int getKth(int[] nums1, int[] nums2, int k) {
             return -1;
+
         }
 
     }
@@ -55,7 +94,7 @@ public class Ti_4_MedianOfTwoSortedArrays {
 
     public static void main(String[] args) {
         Solution solution = new Ti_4_MedianOfTwoSortedArrays().new Solution();
-        System.out.println(solution.findMedianSortedArrays(ArrayUtil.createByArg(1, 3), ArrayUtil.createByArg(2)));
+        System.out.println(solution.findMedianSortedArrays(ArrayUtil.createByArg(0, 0, 0, 0, 0), ArrayUtil.createByArg(-1, 0, 0, 0, 0, 0, 1)));
     }
 
 
