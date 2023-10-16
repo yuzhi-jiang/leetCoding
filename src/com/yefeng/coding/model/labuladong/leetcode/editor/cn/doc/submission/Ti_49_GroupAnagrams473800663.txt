@@ -1,0 +1,59 @@
+    class Solution {
+        public List<List<String>> groupAnagrams(String[] strs) {
+            return solutionByCount(strs);
+        }
+
+        public List<List<String>> solutionBySort(String[] strs) {
+            HashMap<String,List<String>> map=new HashMap<>();
+            for (String str : strs) {
+//                对str进行排序
+                char[] charArray = str.toCharArray();
+                Arrays.sort(charArray);
+                String key = new String(charArray);
+                if(map.containsKey(key)){
+                    map.get(key).add(str);
+                }else{
+                    ArrayList<String > list = new ArrayList<>();
+                    list.add(str);
+                    map.put(key,list);
+                }
+            }
+            return new ArrayList<>(map.values());
+        }
+        public List<List<String>> solutionByCount(String[] strs) {
+
+            HashMap<String,List<String>> map=new HashMap<>();
+            for (String str : strs) {
+
+//                对str进行排序
+                byte[] sort=new byte[26];
+                for(byte i=0;i<str.length();++i){
+                    sort[str.charAt(i)-97]++;
+                }
+                StringBuilder builder=new StringBuilder();
+                for (int i = 0; i < sort.length; i++) {
+                    if(sort[i]!=0){
+                        char c= (char) (i+97);
+                        builder.append(c);
+                    }
+                }
+                String key= builder.toString();
+                System.out.println("key="+key);
+                if(map.containsKey(key)){
+                    map.get(key).add(str);
+                }else{
+                    ArrayList<String > list = new ArrayList<>();
+                    list.add(str);
+                    map.put(key,list);
+                }
+            }
+            return new ArrayList<>(map.values());
+        }
+    }
+
+//total_testcases:120
+//total_correct:102
+//input_formatted:["ddddddddddg","dgggggggggg"]
+//expected_output:[["dgggggggggg"],["ddddddddddg"]]
+//code_output:[["ddddddddddg","dgggggggggg"]]
+//last_testcase:["ddddddddddg","dgggggggggg"]

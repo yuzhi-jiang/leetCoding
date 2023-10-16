@@ -1,0 +1,72 @@
+> Problem: [2562. 找出数组的串联值](https://leetcode.cn/problems/find-the-array-concatenation-value/description/)
+
+![image.png](https://pic.leetcode.cn/1697071067-FQxhft-image.png)
+
+# 解题思路
+
+把两个数 $num1$ 和 $num2$串联， 首先看 $num2$有多少位数，如果有 $n$ 位数，那么两个串联起来的结果为 $num1 * 10 ^ n$ + $num2$。值得注意的是，如果$num2$ 为 0，那么串联的结果就是 $num1$，这相当于 $nums$的长度为奇数时在最中间的一个数。
+
+解题方法主要是用双指针获得数组左右两边的数 $num1$ 和 $num2$。然后用数学函数 $(int)Math.log10(num2) + 1$ 来计算 $num2$的位数或者通过 $num2$除以$10 ^ n$ 变成 0 来获得$num2$的位数。
+
+## 方法一 用函数Math.log10 来计算 num2 的位数
+
+## 复杂度
+
+- 时间复杂度:  $O(nlogU)$, 其中 $n$为数组的长度，$logU$ 表示数组右一半部分数据中的最大位数。
+- 空间复杂度: $O(1)$
+
+## 代码
+
+* Java
+
+```Java
+
+class Solution {
+  public long findTheArrayConcVal(int[] nums) {
+      
+        long ans = 0;
+        int i = 0, j = nums.length - 1;
+        
+        while(i < j) {
+            int num1 = nums[i++], num2 = nums[j--];
+            ans += (long)num1 * Math.pow(10, (int)Math.log10(num2) + 1) + num2;
+        }
+        
+        return i == j? ans += nums[i] : ans;
+    }
+}
+
+
+```
+
+## 方法二 通过除以 $10 ^ n$ 变成 0 来获得 num2 的位数
+
+## 复杂度
+
+- 时间复杂度: $O(nlogU)$, 其中 $n$为数组的长度，$logU$ 表示数组右一半部分数据中的最大位数。
+- 空间复杂度: $O(1)$
+
+## 代码
+
+* Java
+
+```Java
+
+class Solution {
+  public long findTheArrayConcVal(int[] nums) {
+      
+        long ans = 0;
+        int i = 0, j = nums.length - 1;
+        
+        while(i < j) {
+            int num1 = nums[i++], num2 = nums[j--];
+            for (int x = num2; x > 0; x /= 10, num1 *= 10);
+            ans += num1 + num2;
+        }
+        
+        return i == j? ans += nums[i] : ans;
+    }
+}
+
+```
+

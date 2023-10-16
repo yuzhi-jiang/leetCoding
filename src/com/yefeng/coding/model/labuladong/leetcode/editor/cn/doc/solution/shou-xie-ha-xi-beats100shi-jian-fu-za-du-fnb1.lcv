@@ -1,0 +1,70 @@
+### 解题思路
+
+![QQ截图20201214223247.png](https://pic.leetcode-cn.com/1607956919-ENhETa-QQ%E6%88%AA%E5%9B%BE20201214223247.png)
+**手写哈希**:
+
+### 哈希算法要求
+
+将`abc`和`bac`我们认为他们是一类的字符串，计算得到的哈希值(特征值)应该一样，`abc`和`bcd`不是同一类，计算得到的哈希值应该不一样，这就是我们手写哈希算法的要求。
+
+### 简单例子
+
+将`abc`和`bac`映射成一个哈希值，简单映射 我们可以 把 a + b + c = 97 + 98 + 99 = 294作为哈希值， 和 b + a + c = 98 + 97 + 99 = 294. 显然两个哈希值一样，这也是我们想要的结果，将这两个字符串映射成哈希值相同的结果，是我们需要的。
+**可是** 如果只进行简单相加会有一些错误的碰撞。例如：
+`acd`和`abe`计算的结果是一样的。这不是我们想要的结果，**所以**我们要想出一个尽可能避免碰撞的哈希算法就行了。 自己想些什么就写什么，尽量让哈希散列的范围较大就行。避免不必要的错误碰撞。
+
+### 我的哈希算法。
+
+* cpp
+
+```cpp
+int hash(string s) {
+       if (!s.size()) return 0;
+       int ans = 0;
+       for (char i: s) {
+           ans = ans + 5*i*i*i/26 + i*1009 - i*i*997;  // 谁便写的，没有什么规律，尽量让哈希散列的范围较大就行了。避免不必要的碰撞。
+       }
+       return ans;
+   }
+```
+
+### 代码 show my code
+
+* cpp
+
+```cpp
+class Solution {
+public:
+
+    int hash(string s) {
+        if (!s.size()) return 0;
+        int ans = 0;
+        for (char i: s) {
+            ans = ans + 5*i*i*i/26 + i*1009 - i*i*997;  // 谁便写的，没有什么规律，尽量让哈希散列的范围较大就行了。避免不必要的碰撞。
+        }
+        return ans;
+    }
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+
+        if (!strs.size()) return {};
+        vector<vector<string>> ans;
+        int index = 0;
+        unordered_map<int, int> map;    //  第一个存哈希值， 第二个存 下标
+        
+        for (int i = 0; i < strs.size(); i ++ ) {
+            int t = hash(strs[i]);
+            if (map.find(t) != map.end()) {
+                ans[map[t]].push_back(strs[i]);
+            } else {
+                map[t] = index;
+                index ++ ;
+                vector<string> temp;
+                temp.push_back(strs[i]);
+                ans.push_back(temp);
+            }
+        }
+        return ans;
+    }
+};
+```
+

@@ -1,0 +1,27 @@
+> Problem: [49. 字母异位词分组](https://leetcode.cn/problems/group-anagrams/description/)
+
+* []
+
+```Java
+
+class Solution {
+  public List<List<String>> groupAnagrams(String[] strs) {
+      Map<String, List<String>> map = new HashMap<String, List<String>>();
+
+      for(var str :strs){
+          char[] array = str.toCharArray();
+          Arrays.sort(array);
+
+          String s = new String(array);   //获取排序后的字符串
+
+          List<String> temp_list = map.getOrDefault(s, new ArrayList<String>());
+          temp_list.add(str);     //将排序后相等的字符串存入一个集合
+
+          //将该字符串存入以 “s”为key，list为value的map键值对中
+          map.put(s, temp_list);
+      }
+      return new ArrayList<List<String>>(map.values());
+  }
+}
+```
+

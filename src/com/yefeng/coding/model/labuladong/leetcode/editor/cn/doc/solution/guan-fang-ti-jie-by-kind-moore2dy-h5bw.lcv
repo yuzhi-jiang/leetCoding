@@ -1,0 +1,29 @@
+* 
+
+```
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> Hash;
+        //遍历字符串数组
+        for (const auto& str : strs){
+            //设置中间变量记录每一个字符串
+            string now = str;
+            //进行排序，因为相同的单词中所包含的字母一定是相同的
+            sort(now.begin(), now.end());
+            //在哈希表中寻找排完序单词的位置，如果找不到就创建该位置
+            //并将此时原字符串插入到哈希表中
+            Hash[now].emplace_back(str);
+        }
+        //设置二维字符串数组
+        vector<vector<string>> ans;
+        //对哈希表进行遍历，将每一个对应的value值加入到二维字符串数组
+        for (auto it = Hash.begin(); it != Hash.end(); ++it){
+            ans.emplace_back(it->second);
+        }
+        //返回二维字符串数组
+        return ans;
+    }
+};
+```
+

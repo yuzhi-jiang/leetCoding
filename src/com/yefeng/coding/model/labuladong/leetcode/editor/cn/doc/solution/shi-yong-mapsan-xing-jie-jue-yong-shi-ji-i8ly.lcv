@@ -1,0 +1,30 @@
+### 解题思路
+
+执行用时：120 ms, 在所有 JavaScript 提交中击败了98.31%的用户
+
+1. 定义map存储
+2. 字符串转数组->排序->转字符串为key（将所有异位词排序为同一单词，作为key）
+3. 根据key插入map
+4. map传数组输出
+
+### 代码
+
+* javascript
+
+```javascript
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+var groupAnagrams = function(strs) {
+  let map = new Map();
+
+  strs.forEach((str) => {
+    const key = str.split("").sort().join("");
+    map.has(key) ? map.get(key).push(str) : map.set(key, [str]);
+  });
+
+  return Array.from(map.values());
+};
+```
+

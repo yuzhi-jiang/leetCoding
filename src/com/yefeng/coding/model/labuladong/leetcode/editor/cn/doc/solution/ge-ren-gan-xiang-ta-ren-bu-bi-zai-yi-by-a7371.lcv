@@ -1,0 +1,36 @@
+### 解题思路
+
+这种分类题，思路其实可以确定下来：第一遍遍历就要分好类，第二遍取出来作为ans即可。
+那么，key的选取思路才是核心。每一题都可能有每一题的特征。
+对于本题而言，经过排序后，乱序的字符串可以统一分为一类，这是很棒的。
+然后还可以用常见的计数器。以前习惯用 char jishu[26]来计数，现在看来，还不如使用一个string，
+可以通过resize(26)来固定长度，作为key即可。
+最后还有质数大法，把视角关注到了每个字母上。如果每个字母都对整个字符串的乘积有独特的贡献，那么自然是充分的。
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string,vector<string>> mymap;
+
+        for( int i=0; i<strs.size() ;i++ )
+        {
+            string str = strs[i];
+            sort( str.begin() , str.end() );
+            mymap[str].push_back( strs[i] );
+        }
+        vector<vector<string>> ans;
+        for(auto it = mymap.begin() ;it!= mymap.end() ;it++ )
+        {
+            ans.push_back(it->second);
+        }
+
+        return ans;
+    }
+};
+```
+

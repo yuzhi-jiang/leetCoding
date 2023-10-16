@@ -1,0 +1,36 @@
+### 解题思路
+
+如果没有重复字母的话，一个int32位可以用来记录出现的字母。
+不过现在字母可以重复了，于是int32就不行了。
+由于字符串长度最长是100 < 128，想到可以用字符来记录频次，把int替换为string即可，以下是代码。
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<string> mp(strs.size(), string(26, 0));
+        vector<vector<string>> ret;
+        for(int i=0;i<strs.size();++i){
+            for(int j=0;j<strs[i].size();++j){
+                mp[i][strs[i][j]-'a']++;
+            }
+        }
+        unordered_map<string, vector<string>> temp;
+        for(int i=0;i<strs.size();++i){
+            if(mp[i]!=string(26, 0)){
+                temp[mp[i]].push_back(strs[i]);
+            }
+            if(strs[i].size()==0) temp[string(26, 0)].push_back(strs[i]);
+        }
+        for(auto it=temp.begin();it!=temp.end();++it){
+            ret.push_back(it->second);
+        }
+        return ret;
+    }
+};
+```
+

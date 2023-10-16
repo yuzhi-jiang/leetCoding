@@ -1,0 +1,33 @@
+先对字符进行排序，检查字符是否在哈希表中，如果是的话，就证明该字母的异位词已经出现过，添加到已存在的列表中；否则将新出现的词排序后添加到哈希表，并新建列表添加到其中。
+
+* python
+
+```python
+class Solution(object):
+    def strSort(self, strTemp):
+        listStr = []
+        for j in strTemp:
+            listStr.append(j)
+        listStr.sort()
+        strResult = ""
+        for j in listStr:
+            strResult = strResult + j
+        return strResult
+
+    def groupAnagrams(self, strs):
+        strResult = []
+        resultTemp = {}
+        numIndex = 0
+
+        for i in strs:
+            iTemp = self.strSort(i)
+            if iTemp not in resultTemp:
+                resultTemp[iTemp] = numIndex
+                strResult.append([i])
+                numIndex = numIndex + 1
+            else:
+                strResult[resultTemp[iTemp]].append(i)
+        
+        return strResult
+```
+

@@ -1,0 +1,186 @@
+## 质数
+
+### 解题思路
+
+- `算术基本定理`
+  - 任何一个大于1的自然数N，如果N不为质数，那么N可以`唯一`分解成有限个质数的乘积
+- `[a, z]`Unicode编码 - 97=`[0, 25]` 对应`26个质数`。每字母代表`质数`的`乘积`表示字符串
+- `乘法交换律`忽略字母顺序。`算术基本定理`保证不同质数 或 相同质数不同个数，乘积`唯一`
+
+### 代码
+
+Map
+
+* javascript
+
+```javascript
+var groupAnagrams = function(strs) {
+    var h = new Map, prime = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
+    for(var i = 0; i < strs.length; i++) {
+        for(var j = 0, sum = 1; j < strs[i].length; j++)
+            sum *= prime[strs[i].charCodeAt(j) - 97]
+        h.has(sum) ? h.get(sum).push(strs[i]) : h.set(sum, [strs[i]])
+    }
+    return Array.from(h.values())
+};
+```
+
+![质数解法·Map运行结果](https://pic.leetcode-cn.com/1607921997-vKECUp-7.png)
+
+Object
+
+* javascript
+
+```javascript
+var groupAnagrams = function(strs) {
+    var h = Object.create(null), prime = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
+    for(var i = 0; i < strs.length; i++) {
+        for(var j = 0, sum = 1; j < strs[i].length; j++) 
+            sum *= prime[strs[i][j].charCodeAt() - 97]
+        h[sum] ? h[sum].push(strs[i]) : h[sum] = [strs[i]]
+    }
+    return Object.values(h)
+};
+```
+
+![质数解法·Object运行结果](https://pic.leetcode-cn.com/1607922041-jGeBNU-1.png)
+
+### 链接
+
+- 质数生成推荐用[奇数筛](https://leetcode-cn.com/problems/count-primes/solution/mei-ju-ai-shi-shai-xian-xing-shai-qi-shu-shai-5xin/)
+
+* javascript
+
+```javascript
+var getPrimes = function(n) {// getPrimes(102) 可以获得26个质数
+    var isCom= new Uint8Array(n), b = Math.sqrt(n), r = n > 2 ? [2] : [], t
+    for(var i = 3; i < n; i += 2) {
+        if(!isCom[i]) {
+            r.push(i)
+            if (i <= b) for(var j = i; (t = i * j) < n; j += 2) isCom[t] = 1
+        }
+    }
+    return r
+};
+```
+
+## Sort
+
+### 解题思路
+
+- `Sort`忽略参数，按元素`Unicode位点`排序，即`Unicode编码`升序排列
+
+### 代码
+
+Map
+
+* javascript
+
+```javascript
+var groupAnagrams = function(strs) {
+    var h = new Map, k
+    for(var i = 0; i < strs.length; i++) 
+        h.has(k = strs[i].split('').sort().join('')) ? h.get(k).push(strs[i]) : h.set(k, [strs[i]])
+    return Array.from(h.values())
+};
+```
+
+![Sort解法Map运行结果](https://pic.leetcode-cn.com/1607922130-HBrAyJ-3.png)
+
+Object
+
+* javascript
+
+```javascript
+var groupAnagrams = function(strs) {
+    var h = Object.create(null), k
+    for(var i = 0; i < strs.length; i++) 
+        h[k = strs[i].split('').sort().join('')] ? h[k].push(strs[i]) : h[k] = [strs[i]]
+    return Object.values(h)
+};
+```
+
+![Sort解法Object运行结果](https://pic.leetcode-cn.com/1607922212-nCkRjm-4.png)
+
+## 数组
+
+### 解题思路
+
+- `26`长度数组`[0, 25]`位的`值`对应字母`[a, z]`出现次数
+
+### 代码
+
+Map
+
+* javascript
+
+```javascript
+var groupAnagrams = function(strs) {
+    var h = new Map, sum
+    for(var i = 0; i < strs.length; i++) {
+        for(var j = 0, counts = new Uint8Array(26); j < strs[i].length; j++)
+            counts[strs[i][j].charCodeAt() - 97]++
+        h.has(sum = counts.toString()) ? h.get(sum).push(strs[i]) : h.set(sum, [strs[i]])
+    }
+    return Array.from(h.values())
+};
+```
+
+![数组解法Map运行结果](https://pic.leetcode-cn.com/1607922365-yfLtIG-6.png)
+
+Object
+
+* javascript
+
+```javascript
+var groupAnagrams = function(strs) {
+    var h = Object.create(null), sum
+    for(var i = 0; i < strs.length; i++) {
+        for(var j = 0, counts = new Uint8Array(26); j < strs[i].length; j++)
+            counts[strs[i][j].charCodeAt() - 97]++
+        h[sum = counts.toString()] ? h[sum].push(strs[i]) : h[sum] = [strs[i]]
+    }
+    return Object.values(h)
+};
+```
+
+![数组解法Object运行结果](https://pic.leetcode-cn.com/1607922348-xMBffV-5.png)
+
+### 拓展
+
+遍历字符串，字节转Unicode编码：
+- `str[i].charCodeAt(0)` `str.charAt(i).charCodeAt(0)` `str.charCodeAt(i)` 谁更快？
+
+* javascript
+
+```javascript
+// Setup
+const ar = Array.from({length: 100}, _ => String.fromCharCode(...randArray(500, 97, 97 + 26)))
+function randArray(len, min, max) {
+    return Array.from({length: len}, _ => min + Math.random() * (max - min) | 0)
+}
+const str2unicode1 = str => {
+    let res = '', i = -1
+    while(++i < str.length) res += str[i].charCodeAt(0)
+    return res
+}
+const str2unicode2 = str => {
+    let res = '', i = -1
+    while(++i < str.length) res += str.charAt(i).charCodeAt(0)
+    return res
+}
+const str2unicode3 = str => {
+    let res = '', i = -1
+    while(++i < str.length) res += str.charCodeAt(i)
+    return res
+}
+// str[i].charCodeAt(0)
+for(var i = 0; i < 100; i++) str2unicode1(ar[i])
+// str.charAt(i).charCodeAt(0)
+for(var i = 0; i < 100; i++) str2unicode2(ar[i])
+// str.charCodeAt(i)
+for(var i = 0; i < 100; i++) str2unicode3(ar[i])
+```
+
+![测试结果](https://pic.leetcode-cn.com/1607926606-fqadpC-image.png)
+`str.charCodeAt(i)`更快
