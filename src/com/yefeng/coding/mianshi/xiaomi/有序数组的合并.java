@@ -1,5 +1,7 @@
 package com.yefeng.coding.mianshi.xiaomi;
 
+import java.util.Arrays;
+
 /*
 【两个有序数组合并】
 问题描述:
@@ -38,16 +40,60 @@ public class 有序数组的合并 {
 
     }
 
+    static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = 0, p2 = 0;
+        int[] sorted = new int[m + n];
+        Arrays.fill(sorted, 0);
+        int cur;
+        int t = 0;
+        while (p1 < m || p2 < n) {
+            if (p1 == m) {
+                cur = nums2[p2++];
+            } else if (p2 == n) {
+                cur = nums1[p1++];
+            } else if (nums1[p1] < nums2[p2]) {
+                cur = nums1[p1++];
+            } else {
+                cur = nums2[p2++];
+            }
+//            sorted[p1 + p2 - 1] = cur;
+            sorted[t++] = cur;
+        }
+
+        for (int i = 0; i != m + n; ++i) {
+            nums1[i] = sorted[i];
+        }
+        sorted = null;
+    }
+
+    static void merge2(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1, p2 = n - 1;
+        int tail = m + n - 1;
+        int cur;
+        while (p1 >= 0 || p2 >= 0) {
+            if (p1 == -1) {
+                cur = nums2[p2--];
+            } else if (p2 == -1) {
+                cur = nums1[p1--];
+            } else if (nums1[p1] > nums2[p2]) {
+                cur = nums1[p1--];
+            } else {
+                cur = nums2[p2--];
+            }
+            nums1[tail--] = cur;
+        }
+    }
+
 
     public static void main(String[] args) {
         int i = 0;
-        int a[] = {3, 6, 4, 8, 5, 6};
-        do {
-            a[i] -= 3;
-        } while (a[i++] < 4);
-        for (i = 0; i < 6; i++) {
-            System.out.print(a[i] + " ");
+        int a[] = {1, 2, 3, 0, 0, 0, 0};
+        int b[] = {2, 5, 6};
+        merge(a, 3, b, 3);
+        for (int i1 : a) {
+            System.out.println(i1);
         }
+
     }
 
 }

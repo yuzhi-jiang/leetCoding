@@ -1,5 +1,9 @@
 package com.yefeng.coding.util;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * This class is for
  *
@@ -8,20 +12,13 @@ package com.yefeng.coding.util;
  */
 public class MySortUtil {
 
+    int[] a = {2, 5, 35, 7, 23, 56};
+    int i;
 
-    public static void main(String[] args) {
-        int[] a = {2, 5, 35, 7, 23, 56};
-        int i;
+    @Before
+    public void before() {
+
         System.out.printf("before sort:");
-        for (i = 0; i < a.length; i++) {
-            System.out.printf("%d ", a[i]);
-        }
-        System.out.printf("\n");
-
-        bucketSort(a, 61);
-        //bubbleSort2(a, a.length);
-
-        System.out.printf("after  sort:");
         for (i = 0; i < a.length; i++) {
             System.out.printf("%d ", a[i]);
         }
@@ -29,12 +26,29 @@ public class MySortUtil {
 
     }
 
+    @Test
+    public void sort() {
+
+//        bucketSort(a, 61);
+        insertSort(a, a.length);
+    }
+
+    @After
+    public void after() {
+        System.out.printf("after  sort:");
+        for (i = 0; i < a.length; i++) {
+            System.out.printf("%d ", a[i]);
+        }
+        System.out.printf("\n");
+    }
 
     /**
      * 首先在未排序序列中找到最小元素，存放到排序序列的起始位置，
      * 然后，再从剩余未排序元素中继续寻找最小元素，
      * 然后放到第二个元素位置。以此类推，直到所有元素均排序完毕
      *
+     *
+     * n=0开始，找到第n大的（n=0，最小，n=1倒数第二小），与n的位置上的数互换
      * @param nums
      */
     public static void selectSort(int[] nums) {
@@ -78,9 +92,10 @@ public class MySortUtil {
     }
 
 
-//    插入排序
+
 
     /**
+     * 插入排序<br>
      * 基本思想是: 把n个待排序的元素看成为一个有序表和一个无序表。
      * 开始时有序表中只包含1个元素，无序表中包含有n-1个元素
      * ，排序过程中每次从无序表中取出第一个元素，将它插入到有序表中的适当位置，

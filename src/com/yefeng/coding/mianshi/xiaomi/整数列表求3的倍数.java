@@ -12,24 +12,16 @@ public class 整数列表求3的倍数 {
             vis[i] = false;
         }
         do {
-
-
             temp++;
-
             //找到下一个没有访问的
-
             while (vis[++res]) {
-//                res++;
+                //  res++;
                 if (res == n - 1) {
                     res = -1;
                 }
             }
-
-
             if (num == 1) return res + 1;
-
             //   System.out.println("没有访问的:"+(res+1));
-
             if (temp == 3) {
                 vis[res] = true;
                 num--;
@@ -47,7 +39,7 @@ public class 整数列表求3的倍数 {
     }
 
     public static void main(String[] args) {
-        int fun = fun(4);
+        int fun = fun(5);
         System.out.println(fun);
     }
 
