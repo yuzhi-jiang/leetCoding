@@ -11,7 +11,7 @@ public class Ti_42_TrappingRainWater {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int trap(int[] height) {
-        return trap_solution(height);
+        return trap_solution2(height);
     }
 
     public int trap_solution(int[] height) {
@@ -36,6 +36,33 @@ class Solution {
         }
         return res_sum;
 
+    }
+    public int trap_solution2(int[] height) {
+//        trap[i]=min(l_max,r_max)-height[i]
+        int left=0,right=height.length-1;
+
+        int left_max=0,right_max=0;
+
+        int sum=0;
+        while (left<right){
+            left_max=Math.max(height[left],left_max);
+
+            right_max=Math.max(height[right],right_max);
+
+            if (left_max<right_max){
+                sum+=left_max-height[left];
+
+                left++;
+            }else{
+                sum+=right_max-height[right];
+
+                right--;
+            }
+
+
+        }
+
+        return sum;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
